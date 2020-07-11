@@ -44,20 +44,30 @@ function getYears(cb) {
         return { 'Year': Year.Year }
     });
 
-    console.log(years)
+    return years
 
 };
 
 getYears(getFinals)
 /* Task 5: Implement a higher-order function called `getWinners`, that accepts the callback function `getFinals()` and determine the winner (home or away) of each `finals` game. Return the name of all winning countries in an array called `winners` */
 
-function getWinners(/* code here */) {
+function getWinners(cb) {
 
-    /* code here */
+    const winners = []
+    const winnersTemp = cb(fifaData)
 
-};
+    for (let i = 0; i < winnersTemp.length; i++) {
+        if (winnersTemp[i][`Home Team Goals`] > winnersTemp[i][`Away Team Goals`]) {
+            winners.push(winnersTemp[i]['Home Team Name'])
+        } else {
+            winners.push(winnersTemp[i][`Away Team Name`])
+        }
 
-getWinners();
+    }
+    return winners
+}
+
+getWinners(getFinals);
 
 /* Task 6: Implement a higher-order function called `getWinnersByYear` that accepts the following parameters and returns a set of strings "In {year}, {country} won the world cup!" 
 
@@ -66,21 +76,34 @@ Parameters:
  * callback function getYears
  */
 
-function getWinnersByYear(/* code here */) {
+function getWinnersByYear(cbYears, cbWinners) {
 
+    const winners = cbWinners(getFinals)
+    const years = cbYears(getFinals)
+
+    for (let i = 0; i < years.length; i++) {
+        console.log("In", years[i], winners[i], "won the world cup!")
+    }
 };
 
-getWinnersByYear();
+getWinnersByYear(getYears, getWinners);
 
 /* Task 7: Write a function called `getAverageGoals` that accepts a parameter `data` and returns the the average number of home team goals and away team goals scored per match (Hint: use .reduce and do this in 2 steps) */
 
-function getAverageGoals(/* code here */) {
+function getAverageGoals(data) {
+    const averageGoals = []
+    function averageNums(num1, num2) {
+        var a = ((num1 + num2) / 2)
+        return a
+    };
+    for (let i = 0; i < data.length; i++) {
+        data.Push(averageNums())
 
-    /* code here */
-
+    }
+    console.log(averageGoals)
 };
 
-getAverageGoals();
+getAverageGoals(fifaData);
 
 /// STRETCH 🥅 //
 
